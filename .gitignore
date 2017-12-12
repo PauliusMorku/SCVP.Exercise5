@@ -1,0 +1,6 @@
+*.user
+.DS_Store
+*.vcd
+*.autosave
+*.user.*
+

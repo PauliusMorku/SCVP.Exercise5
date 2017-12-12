@@ -5,7 +5,6 @@
 using namespace std;
 
 int sc_main(int argc, char* argv[])
-
 {
     kpn kahn("kpn");
     sc_start();
