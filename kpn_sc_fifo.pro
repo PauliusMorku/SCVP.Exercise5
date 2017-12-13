@@ -31,4 +31,5 @@ SOURCES += main.cpp \
     kpn.cpp
 
 HEADERS += \
-    kpn.h
+    kpn.h \
+    kpn_combined.h

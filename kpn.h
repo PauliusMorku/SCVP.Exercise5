@@ -3,29 +3,6 @@
 
 #include <systemc.h>
 
-
-//class buffer : public sc_fifo<uint32_t>
-//{
-//public:
-//    uint32_t read()
-//    {
-//        uint32_t data;
-//        return data;
-//    }
-
-//    void write(uint32_t & data)
-//    {
-
-//        return;
-//    }
-
-//    buffer(uint32_t buffer_size){this->buffer_size = buffer_size;}
-
-//private:
-//    uint32_t buffer_size;
-
-//};
-
 SC_MODULE(adder)
 {
     public:
@@ -49,10 +26,9 @@ SC_MODULE(adder)
 
             fifo_a_in.read(a);
             fifo_c_in.read(c);
+            sum = a + c;
 
             fifo_b_out.write(sum);
-
-            wait();
         }
     }
 };
@@ -71,6 +47,7 @@ SC_MODULE(spliter)
     }
 
     private:
+    uint32_t counter;
     void split(void)
     {
         while(true)
@@ -83,9 +60,15 @@ SC_MODULE(spliter)
             fifo_d_out.write(b);
             e_out.write(b);
 
-            std::cout<<"Output: "<< b <<std::endl;
-
-            wait();
+            if (counter <= 10)
+            {
+                counter++;
+                std::cout<<"Output: "<< b <<std::endl;
+            }
+            else
+            {
+                wait(); // stop simulation
+            }
         }
     }
 };
@@ -112,8 +95,6 @@ SC_MODULE(delayer)
 
             fifo_d_in.read(d);
             fifo_c_out.write(d);
-
-            wait();
         }
     }
 };
@@ -156,7 +137,7 @@ SC_MODULE(kpn)
         fifo_b.write(initial_b);
 
         uint32_t initial_c = 0;
-        fifo_b.write(initial_c);
+        fifo_c.write(initial_c);
     }
 };
 
